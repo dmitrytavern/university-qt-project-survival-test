@@ -28,6 +28,9 @@ include_directories(${PROJECT_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
 add_subdirectory(src/app)
+add_subdirectory(src/layouts/home)
+add_subdirectory(src/layouts/result)
+add_subdirectory(src/layouts/testing)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   enable_testing()

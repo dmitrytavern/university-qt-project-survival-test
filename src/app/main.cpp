@@ -1,5 +1,5 @@
-#include <QtWidgets/QApplication>
-#include "mainwindow.h"
+#include <QApplication>
+#include "MainWindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 
   MainWindow window;
 
+  window.setFixedSize(600, 400);
   window.show();
 
   return app.exec();
