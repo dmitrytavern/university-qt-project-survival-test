@@ -13,7 +13,8 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}"
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
       },
       "environment": {
         "APP_PLATFORM": "Windows",
@@ -41,7 +42,8 @@
       },
       "environment": {
         "APP_PLATFORM": "Windows",
-        "APP_ARCHITECTURE": "x64"
+        "APP_ARCHITECTURE": "x64",
+        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
       },
       "vendor": {
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
@@ -61,7 +63,8 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}"
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
       },
       "environment": {
         "APP_PLATFORM": "Windows",
@@ -85,7 +88,8 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}"
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
       },
       "environment": {
         "APP_PLATFORM": "Windows",

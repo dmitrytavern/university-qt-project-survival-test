@@ -1,30 +1,29 @@
 #include "MainWindow.h"
-#include "layouts/home/HomeLayout.h"
-#include "layouts/result/ResultLayout.h"
-#include "layouts/testing/TestingLayout.h"
+#include "widgets/HomeWidget/HomeWidget.h"
+#include "widgets/ResultWidget/ResultWidget.h"
+#include "widgets/TestingWidget/TestingWidget.h"
 
-const QString UI_WIN_TITLE = "Тест на виживання програмного проекту";
-
-MainWindow::MainWindow() : QMainWindow()
+MainWindow::MainWindow() : QWidget()
 {
-  HomeLayout *homeLayout = new HomeLayout(this);
+  HomeWidget *homeWidget = new HomeWidget(this);
+  ResultWidget *resultWidget = new ResultWidget(this);
+  TestingWidget *testingWidget = new TestingWidget(this);
 
-  ResultLayout *resultLayout = new ResultLayout(this);
-  resultLayout->setVisible(true);
-  resultLayout->setResultValue(99);
+  QStackedWidget *stackedWidget = new QStackedWidget(this);
+  stackedWidget->addWidget(homeWidget);
+  stackedWidget->addWidget(resultWidget);
+  stackedWidget->addWidget(testingWidget);
+  stackedWidget->setCurrentWidget(homeWidget);
 
-  TestingLayout *testingLayout = new TestingLayout(this);
-  testingLayout->setVisible(false);
-  testingLayout->setEndListener([=, this](int result)
-                                { setCentralWidget(resultLayout);
-                                  testingLayout->setVisible(false);
-                                  resultLayout->setVisible(true);
-                                  resultLayout->setResultValue(result); });
+  QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->addWidget(stackedWidget);
 
-  setWindowTitle(UI_WIN_TITLE);
-  setCentralWidget(homeLayout);
+  QObject::connect(homeWidget, &HomeWidget::startAbout, [=, this]() {});
 
-  QObject::connect(homeLayout->startButton, &QPushButton::clicked, [=, this]()
-                   { setCentralWidget(testingLayout);
-                     testingLayout->setVisible(true); });
+  QObject::connect(homeWidget, &HomeWidget::startTesting, [=, this]()
+                   { stackedWidget->setCurrentWidget(testingWidget); });
+
+  QObject::connect(testingWidget, &TestingWidget::finished, [=, this](int result)
+                   { resultWidget->setResultValue(result); 
+                     stackedWidget->setCurrentWidget(resultWidget); });
 }

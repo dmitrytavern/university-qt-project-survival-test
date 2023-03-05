@@ -1,11 +1,12 @@
-set(LIBRARY_NAME TestingLayout)
+set(LIBRARY_NAME TestingWidget)
 
 add_library(${LIBRARY_NAME} STATIC
-TestingLayout.cpp
+  TestingWidget.cpp
 )
 
 target_link_libraries(${LIBRARY_NAME}
   PRIVATE Qt6::Widgets
+  AppComponents
 )
 
 set_target_properties(${LIBRARY_NAME} PROPERTIES

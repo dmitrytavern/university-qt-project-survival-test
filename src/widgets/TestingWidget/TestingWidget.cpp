@@ -1,8 +1,7 @@
-#include "TestingLayout.h"
+#include "TestingWidget.h"
 
 const QString UI_HELPER = "Оцініть це питання від 0 до 3:\n  0 - навіть не чули про це;\n  1 - чули, але поки що не застосовуємо;\n  2 - застосовується частково;\n  3 - застосовується повною мірою.";
 const QString UI_BUTTON_NEXT = "Далі";
-const QString UI_BUTTON_TOOLTIP = "Значення може бути від 0 до 3";
 
 const std::vector<TestingQuestionData> questionsData = {
     {"1. Концепція визначає ясні недвозначні цілі", "В проекті визначено чіткі, зрозумілі та однозначні цілі, які не викликають двозначності та розуміються однаково всіма учасниками проекту. Це важливо для того, щоб усі члени команди мали чітке уявлення про цілі проекту та могли працювати узгоджено та ефективно для їх досягнення. Наявність ясних цілей також допомагає уникнути непотрібних конфліктів та сприяє більш точній оцінці прогресу проекту."},
@@ -40,7 +39,7 @@ const std::vector<TestingQuestionData> questionsData = {
     {"33. Усі учасники присвячені проекту", "Все участники команды проекта являются преданными и заинтересованными в успехе проекта."},
 };
 
-TestingLayout::TestingLayout(QWidget *parent = nullptr) : QWidget(parent)
+TestingWidget::TestingWidget(QWidget *parent = nullptr) : QWidget(parent)
 {
   nextButton = new QPushButton(UI_BUTTON_NEXT);
   nextButton->setEnabled(false);
@@ -48,47 +47,37 @@ TestingLayout::TestingLayout(QWidget *parent = nullptr) : QWidget(parent)
   answerLineEdit = new QLineEdit(this);
   answerLineEdit->setValidator(new QIntValidator(0, 3, this));
 
-  currentQuestionWidget = 0;
   currentQuestionResult = 0;
+  currentQuestionWidget = -1;
 
-  title = new QLabel(this);
-  QFont titleFont("Arial", 12);
-  title->setText(questionsData[currentQuestionWidget].title);
-  title->setFont(titleFont);
-  title->setWordWrap(true);
+  questionTitle = new AppTitle();
+  questionDescription = new AppPlainText();
 
-  description = new QLabel(this);
-  QFont descriptionFont("Arial", 10);
-  description->setText(questionsData[currentQuestionWidget].description);
-  description->setFont(descriptionFont);
-  description->setWordWrap(true);
+  QLabel *descriptionHelper = new AppPlainText(UI_HELPER);
 
-  QLabel *descriptionHelper = new QLabel();
-  descriptionHelper->setText(UI_HELPER);
-  descriptionHelper->setFont(descriptionFont);
-  descriptionHelper->setWordWrap(true);
+  QVBoxLayout *vbox = new QVBoxLayout();
+  vbox->addWidget(questionTitle);
+  vbox->addWidget(questionDescription);
+  vbox->addWidget(descriptionHelper);
+  vbox->addStretch();
+  vbox->setAlignment(Qt::AlignTop);
 
-  QLabel *answerLineTooltip = new QLabel();
-  QFont answerLineTooltipFont("Arial", 6);
-  answerLineTooltip->setText(UI_BUTTON_TOOLTIP);
-  answerLineTooltip->setFont(answerLineTooltipFont);
-  answerLineTooltip->setWordWrap(true);
+  QHBoxLayout *hbox = new QHBoxLayout();
+  hbox->addWidget(answerLineEdit);
+  hbox->addWidget(nextButton);
+  hbox->setStretchFactor(answerLineEdit, 1);
+  hbox->setAlignment(Qt::AlignBottom);
 
-  QVBoxLayout *box = new QVBoxLayout();
-  box->addWidget(title);
-  box->addWidget(description);
-  box->addWidget(descriptionHelper);
-  box->addWidget(answerLineTooltip);
-  box->addWidget(answerLineEdit);
-  box->addWidget(nextButton);
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->addLayout(vbox, 0);
+  layout->addLayout(hbox, 1);
+  this->setNextQuestion();
 
-  setLayout(box);
-
-  connect(nextButton, &QPushButton::clicked, this, &TestingLayout::onPressNextHandler);
-  connect(answerLineEdit, &QLineEdit::textChanged, this, &TestingLayout::onInputEditLineHandler);
+  connect(nextButton, &QPushButton::clicked, this, &TestingWidget::onPressNextHandler);
+  connect(answerLineEdit, &QLineEdit::textChanged, this, &TestingWidget::onInputEditLineHandler);
 }
 
-void TestingLayout::onPressNextHandler()
+void TestingWidget::onPressNextHandler()
 {
   currentQuestionResult += answerLineEdit->text().toInt();
   answerLineEdit->clear();
@@ -96,22 +85,27 @@ void TestingLayout::onPressNextHandler()
 
   if (questionsData.size() - 1 > currentQuestionWidget)
   {
-    currentQuestionWidget++;
-    title->setText(questionsData[currentQuestionWidget].title);
-    description->setText(questionsData[currentQuestionWidget].description);
+    this->setNextQuestion();
   }
   else
   {
-    this->onEndTestingHandler(currentQuestionResult);
+    emit finished(currentQuestionResult);
   }
 }
 
-void TestingLayout::onInputEditLineHandler(const QString &text)
+void TestingWidget::setNextQuestion()
 {
-  nextButton->setEnabled(!text.isEmpty() && text.toInt() >= 0 && text.toInt() <= 3);
+  currentQuestionWidget++;
+  questionTitle->setText(questionsData[currentQuestionWidget].title);
+  questionDescription->setText(questionsData[currentQuestionWidget].description);
 }
 
-void TestingLayout::setEndListener(const std::function<void(int)> callback)
+void TestingWidget::onInputEditLineHandler(const QString &text)
 {
-  onEndTestingHandler = callback;
+  nextButton->setEnabled(validateInput(text));
+}
+
+bool TestingWidget::validateInput(const QString &text)
+{
+  return !text.isEmpty() && text.toInt() >= 0 && text.toInt() <= 3;
 }

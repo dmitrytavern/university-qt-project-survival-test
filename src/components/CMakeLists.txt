@@ -1,7 +1,8 @@
-set(LIBRARY_NAME HomeLayout)
+set(LIBRARY_NAME AppComponents)
 
 add_library(${LIBRARY_NAME} STATIC
-  HomeLayout.cpp
+  AppTitle/AppTitle.cpp
+  AppPlainText/AppPlainText.cpp
 )
 
 target_link_libraries(${LIBRARY_NAME}
