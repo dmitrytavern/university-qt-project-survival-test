@@ -6,8 +6,9 @@ add_executable(${APP_PROJECT_NAME}
 target_link_libraries(${APP_PROJECT_NAME}
   PRIVATE Qt6::Widgets
   HomeWidget
-  TestingWidget
+  AboutWidget
   ResultWidget
+  TestingWidget
 )
 
 set_target_properties(${APP_PROJECT_NAME} PROPERTIES

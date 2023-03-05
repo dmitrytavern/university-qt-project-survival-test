@@ -10,6 +10,6 @@ private:
   QString getReportMessage(float num);
 
 public:
-  ResultWidget(QWidget *parent);
+  ResultWidget();
   void setResultValue(int num);
 };

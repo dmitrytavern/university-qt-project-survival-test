@@ -39,7 +39,7 @@ const std::vector<TestingQuestionData> questionsData = {
     {"33. Усі учасники присвячені проекту", "Все участники команды проекта являются преданными и заинтересованными в успехе проекта."},
 };
 
-TestingWidget::TestingWidget(QWidget *parent = nullptr) : QWidget(parent)
+TestingWidget::TestingWidget() : QWidget()
 {
   nextButton = new QPushButton(UI_BUTTON_NEXT);
   nextButton->setEnabled(false);

@@ -15,7 +15,7 @@ const QString UI_RESULT_BIG_COMPANY = "Результат (велика комп
 
 const QString UI_BUTTON_START = "Закінчити";
 
-ResultWidget::ResultWidget(QWidget *parent = nullptr) : QWidget(parent)
+ResultWidget::ResultWidget() : QWidget()
 {
   resultText = new AppPlainText();
 

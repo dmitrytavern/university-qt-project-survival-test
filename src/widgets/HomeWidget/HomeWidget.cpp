@@ -7,7 +7,7 @@ const QString UI_DESCRIPTION = "Стів Макконнелл у своїй кн
 const QString UI_BUTTON_START = "Почати";
 const QString UI_BUTTON_ABOUT = "Про программу";
 
-HomeWidget::HomeWidget(QWidget *parent = nullptr) : QWidget(parent)
+HomeWidget::HomeWidget() : QWidget()
 {
   AppTitle *title = new AppTitle(UI_TITLE);
 
@@ -31,9 +31,9 @@ HomeWidget::HomeWidget(QWidget *parent = nullptr) : QWidget(parent)
   layout->addLayout(hbox);
   layout->setAlignment(Qt::AlignTop);
 
-  connect(startButton, &QPushButton::clicked, startButton, [=, this]()
+  connect(startButton, &QPushButton::clicked, this, [=, this]()
           { emit startTesting(); });
 
-  connect(aboutButton, &QPushButton::clicked, aboutButton, [=, this]()
+  connect(aboutButton, &QPushButton::clicked, this, [=, this]()
           { emit startAbout(); });
 }

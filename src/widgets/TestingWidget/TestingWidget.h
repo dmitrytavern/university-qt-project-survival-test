@@ -14,7 +14,7 @@ class TestingWidget : public QWidget
   Q_OBJECT
 
 public:
-  TestingWidget(QWidget *parent);
+  TestingWidget();
 
   QLineEdit *answerLineEdit;
   QPushButton *nextButton;

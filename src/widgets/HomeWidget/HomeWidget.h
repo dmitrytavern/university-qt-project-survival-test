@@ -6,7 +6,7 @@ class HomeWidget : public QWidget
   Q_OBJECT
 
 public:
-  HomeWidget(QWidget *parent);
+  HomeWidget();
 
 signals:
   void startTesting();

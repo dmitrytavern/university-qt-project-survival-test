@@ -31,6 +31,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 add_subdirectory(src/app)
 add_subdirectory(src/components)
 add_subdirectory(src/widgets/HomeWidget)
+add_subdirectory(src/widgets/AboutWidget)
 add_subdirectory(src/widgets/ResultWidget)
 add_subdirectory(src/widgets/TestingWidget)
 
