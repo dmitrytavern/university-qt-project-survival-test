@@ -2,31 +2,6 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "windows-debug",
-      "displayName": "Windows x64 Debug",
-      "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, debug build type",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
-        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
-      },
-      "environment": {
-        "APP_PLATFORM": "Windows",
-        "APP_ARCHITECTURE": "x64"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "hostOS": [ "Windows" ]
-        }
-      }
-    },
-    {
       "name": "windows-release",
       "displayName": "Windows x64 Release",
       "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, release build type",
@@ -43,7 +18,7 @@
       "environment": {
         "APP_PLATFORM": "Windows",
         "APP_ARCHITECTURE": "x64",
-        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
+        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\mingw_64\\"
       },
       "vendor": {
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
@@ -52,48 +27,23 @@
       }
     },
     {
-      "name": "windows-debug-old",
-      "displayName": "Windows x86 Debug",
-      "description": "Sets Ninja generator, compilers, x86 architecture, build and install directory, debug build type",
+      "name": "windows-debug",
+      "displayName": "Windows x64 Debug",
+      "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, debug build type",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "architecture": {
-        "value": "x86",
+        "value": "x64",
         "strategy": "external"
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
-        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
+        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\mingw_64\\"
       },
       "environment": {
         "APP_PLATFORM": "Windows",
-        "APP_ARCHITECTURE": "x86"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "hostOS": [ "Windows" ]
-        }
-      }
-    },
-    {
-      "name": "windows-release-old",
-      "displayName": "Windows x86 Release",
-      "description": "Sets Ninja generator, compilers, x86 architecture, build and install directory, release build type",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
-        "CMAKE_PREFIX_PATH": "C:\\Qt\\6.4.2\\msvc2019_64\\"
-      },
-      "environment": {
-        "APP_PLATFORM": "Windows",
-        "APP_ARCHITECTURE": "x86"
+        "APP_ARCHITECTURE": "x64"
       },
       "vendor": {
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
@@ -140,52 +90,6 @@
       "environment": {
         "APP_PLATFORM": "Linux",
         "APP_ARCHITECTURE": "x64"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "hostOS": [ "Linux" ]
-        }
-      }
-    },
-    {
-      "name": "linux-release-old",
-      "displayName": "Linux x86 Release",
-      "generator": "Unix Makefiles",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}"
-      },
-      "environment": {
-        "APP_PLATFORM": "Linux",
-        "APP_ARCHITECTURE": "x86"
-      },
-      "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "hostOS": [ "Linux" ]
-        }
-      }
-    },
-    {
-      "name": "linux-debug-old",
-      "displayName": "Linux x86 Debug",
-      "generator": "Unix Makefiles",
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": {
-        "value": "x86",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}"
-      },
-      "environment": {
-        "APP_PLATFORM": "Linux",
-        "APP_ARCHITECTURE": "x86"
       },
       "vendor": {
         "microsoft.com/VisualStudioSettings/CMake/1.0": {
