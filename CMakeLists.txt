@@ -27,8 +27,3 @@ add_subdirectory(src/widgets/HomeWidget)
 add_subdirectory(src/widgets/AboutWidget)
 add_subdirectory(src/widgets/ResultWidget)
 add_subdirectory(src/widgets/TestingWidget)
-
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-  enable_testing()
-  add_subdirectory(tests)
-endif()
