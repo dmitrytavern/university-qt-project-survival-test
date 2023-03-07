@@ -1,14 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
-project(ProjectSurvivalTest VERSION 1.0.0 LANGUAGES CXX)
+project(ProjectSurvivalTest VERSION 0.0.0 LANGUAGES CXX)
 
 file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/)
 file(MAKE_DIRECTORY ${PROJECT_SOURCE_DIR}/build/)
-
-if($ENV{APP_ARCHITECTURE} STREQUAL "x64")
-  set(APP_PROJECT_NAME "project-survival-test_v${PROJECT_VERSION}")
-else()
-  set(APP_PROJECT_NAME "project-survival-test_$ENV{APP_ARCHITECTURE}_v${PROJECT_VERSION}")
-endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)

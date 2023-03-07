@@ -1,0 +1,81 @@
+name: Build for Linux
+
+on:
+  release:
+    types: [created]
+
+env:
+  BUILD_TYPE: Release
+  BUILD_FILENAME: project-survival-test.linux64
+  APP_EXECUTABLE_FILENAME: project-survival-test
+  QT_VERSION: "6.4.2"
+
+jobs:
+  release-linux-64:
+    name: Linux
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Intall deps
+        working-directory: ${{ github.workspace }}
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install wget libfuse2 qt6-wayland '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev qt6-wayland-dev-tools libxkbcommon-x11-0
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          host: linux
+          target: "desktop"
+          version: ${{ env.QT_VERSION }}
+          dir: "${{ github.workspace }}/qt"
+          install-deps: "true"
+          setup-python: "true"
+
+      - name: Intall linuxdeployqt
+        working-directory: ${{ github.workspace }}
+        run: |
+          wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+          sudo chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+
+      - name: Configure
+        working-directory: ${{ github.workspace }}
+        run: cmake -B./build -S. ${{ github.workspace }}
+          \-DAPP_PLATFORM=Linux
+          \-DAPP_ARCHITECTURE=x64
+          \-DAPP_EXECUTABLE_FILENAME=${{ env.APP_EXECUTABLE_FILENAME }}
+          \-DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+
+      - name: Build
+        working-directory: ${{ github.workspace }}
+        run: |
+          cmake --build ./build --config ${{ env.BUILD_TYPE }} -j 24
+          mkdir ./bin/${{ env.BUILD_TYPE }}/
+          mv ./bin/${{ env.APP_EXECUTABLE_FILENAME }} ./bin/${{ env.BUILD_TYPE }}/
+
+      - name: Deploy
+        working-directory: ${{ github.workspace }}
+        run:
+          ./linuxdeployqt-continuous-x86_64.AppImage ./bin/${{ env.BUILD_TYPE }}/${{ env.APP_EXECUTABLE_FILENAME }}
+          \-extra-plugins=./
+          \-no-translations
+          \-unsupported-allow-new-glibc
+          \-unsupported-bundle-everything
+          \-no-strip
+
+      - name: Compress
+        working-directory: ${{ github.workspace }}
+        run: tar czvf ./${{ env.BUILD_FILENAME }}.${{ github.ref_name }}.tar.gz ./bin/${{ env.BUILD_TYPE }}
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ github.workspace }}/${{ env.BUILD_FILENAME }}.${{ github.ref_name }}.tar.gz
+          tag: ${{ github.ref }}
+          overwrite: false
